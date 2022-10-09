@@ -6,9 +6,19 @@
     var paciente = obtemPacienteDoFormulario(form);
 
     var pacienteTr = montaTr(paciente);
+
+    
+    var erros = validaPaciente(paciente);
+    console.log(erros)
+
+    if(erros.length > 0 ){
+        exibeMensagensDeErro(erros);
+       
+        return;
+    }
                                                                                                         
     
-    //adiona o paciente na tabela
+    //adiciona o paciente 
 
     var tabela = document.querySelector("#tabela-pacientes");
 
@@ -16,7 +26,23 @@
 
     form.reset();
 
+    var mensagemDeErro = document.querySelector("#mensagens-erro");
+    mensagemDeErro.innerHTML = "";
+
 });
+
+
+    function exibeMensagensDeErro(erros){
+        var ul = document.querySelector("#mensagens-erro");
+        ul.innerHTML = "";
+
+        erros.forEach(function(erro){
+            var li = document.createElement("li");
+            li.textContent = erro;
+            ul.appendChild(li);
+        });
+    }
+
 
     function obtemPacienteDoFormulario(form) {
 
@@ -56,4 +82,27 @@
 
 
         return td;
+    }
+
+    function validaPaciente(paciente){
+        
+        var erros = [];
+
+        if( paciente.nome.length == 0) erros.push("O nome não pode ficar sem preencher!");
+        
+
+        if(!validaPeso(paciente.peso)) erros.push("Peso é inválido!");
+        
+           
+        if(!validaAltura(paciente.altura)) erros.push("A altura é inválida!");
+
+        if(paciente.gordura.length == 0) erros.push("O preenchimento da gordura não pode ficar em branco!");
+
+        if(paciente.peso.length == 0) erros.push("O preenchimento do peso não pode ficar em branco!");
+
+        if(paciente.altura.length == 0) erros.push("O preenchimento da altura não pode ficar em branco!");
+        
+        
+            
+        return erros;
     }
