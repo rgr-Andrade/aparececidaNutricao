@@ -7,8 +7,11 @@ tabela.addEventListener("dblclick", function(event){
 	//var paiDoAlvo = alvoEvento.parentNode;
 	//paiDoAlvo.remove();
 
-	event.target.parentNode.remove();
+	event.target.parentNode.classList.add("fadeOut");
 
+	setTimeout(function(){
+		event.target.parentNode.remove();
+	}, 500);
 });
 
 
